@@ -4,10 +4,6 @@ html, body {
   padding: 0;
 }
 
-.navbar {
-  background-color: hotpink;
-}
-
 .save-note {
   display: none;
 }
