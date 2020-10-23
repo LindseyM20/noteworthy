@@ -1,11 +1,26 @@
 const fs = require("fs");
+const jsonNotes = require("../db/db.json");
+const util = require("util");
+const { v4: uuidv4 } = require("uuid");
 
-let json = require("../db/db.json");
+const writeFileAsync = util.promisify(fs.writeFile);
 
-module.exports = app => {
+module.exports = function(app) {
   // Displays all notes
   app.get("/api/notes", (req, res) => {
-    return res.json(notes);
+    res.json(jsonNotes);
   });
-}
 
+  app.post("/api/notes", (req, res) => {
+    let newNote = req.body;
+    let id = uuidv4();
+    newNote.id = id;
+    jsonNotes.push(newNote);
+    writeFileAsync("./db/db.json", JSON.stringify(jsonNotes))
+    .then( () => {
+      res.json(newNote);
+    }).catch(err => console.log(err));
+  });
+
+  // app.delete()
+}
