@@ -1,22 +1,18 @@
-// Dependencies
-// =============================================================
+// Sets up the Express package
 const express = require("express");
-// const apiRoutes = require("./routes/apiRoutes");
-// const htmlRoutes = require("./routes/htmlRoutes");
 
-// Sets up the Express App
+// Sets up the Express app and our port
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Sets up the Express app to handle data parsing
+// Prepares Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Tells Express to look in the "public" directory
 app.use(express.static("public"));
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
-// app.use("/api", apiRoutes);
-// app.use("/", htmlRoutes);
 
 // Starts the server to begin listening
 app.listen(PORT, function() {
